@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}MongoDB no disponible | MetaTech{% endblock %}
+{% block content %}
+  <section class="empty-state error-state">
+    <span class="empty-icon" aria-hidden="true">!</span>
+    <h1>No se pudo conectar con MongoDB</h1>
+    <p>Verifica que MongoDB Community esté instalado y en ejecución, y que MONGO_URI apunte a la instancia local correcta.</p>
+    <a class="button button-outline" href="{{ url_for('companies.index') }}">Intentar de nuevo</a>
+  </section>
+{% endblock %}

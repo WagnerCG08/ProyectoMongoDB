@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>{% block title %}Directorio MetaTech{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('companies.index') }}" aria-label="Directorio MetaTech, inicio">
+      <span class="brand-mark">M</span>
+      <span>Meta<span class="brand-light">Tech</span></span>
+    </a>
+    <nav class="header-nav" aria-label="Navegación principal">
+      <a href="{{ url_for('companies.index') }}">Directorio</a>
+      <a class="button button-small" href="{{ url_for('companies.new_company') }}">＋ Agregar empresa</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <span>Directorio de casas desarrolladoras de software</span>
+    <span>Villavicencio · Meta, Colombia</span>
+  </footer>
+</body>
+</html>

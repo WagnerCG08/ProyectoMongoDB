@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{% if is_edit %}Editar {{ company.name }}{% else %}Agregar empresa{% endif %} | MetaTech{% endblock %}
+{% block content %}
+  <div class="breadcrumb"><a href="{{ url_for('companies.index') }}">Directorio</a><span>/</span><span>{% if is_edit %}Editar empresa{% else %}Nueva empresa{% endif %}</span></div>
+  <section class="form-page">
+    <p class="eyebrow">DIRECTORIO TECNOLÓGICO · META, COLOMBIA</p>
+    <h1>{% if is_edit %}Editar empresa{% else %}Agrega una empresa{% endif %}</h1>
+    <p class="form-intro">Completa la información para mantener actualizado el directorio.</p>
+
+    <form class="company-form" method="post" action="{% if is_edit %}{{ url_for('companies.update_company', company_id=company._id) }}{% else %}{{ url_for('companies.create_company') }}{% endif %}">
+      <div class="form-grid">
+        {% for field, label in fields %}
+          <div class="form-field {% if field in ('products', 'website_url', 'image_url') %}form-field-wide{% endif %}">
+            <label for="{{ field }}">{{ label }}{% if field == "name" %} <span class="required">*</span>{% endif %}</label>
+            {% if field == "products" %}
+              <textarea id="{{ field }}" name="{{ field }}" rows="3" placeholder="Describe brevemente sus productos y servicios">{{ company.get(field, "") }}</textarea>
+            {% else %}
+              <input id="{{ field }}" name="{{ field }}" type="{% if field in ('website_url', 'image_url') %}url{% else %}text{% endif %}" value="{{ company.get(field, '') }}" {% if field == "name" %}required{% endif %} {% if field in ('website_url', 'image_url') %}placeholder="https://..."{% endif %}>
+            {% endif %}
+            {% if field == "website_url" and not is_edit %}
+              <p class="form-note">Para autocompletar, usa una página pública que comience con https://.</p>
+              <button class="button button-outline scrape-button" id="scrape-company" type="button" data-preview-url="{{ url_for('companies.preview_company') }}">✦ Consultar sitio y completar ficha</button>
+              <p class="scrape-status" id="scrape-status" role="status" aria-live="polite"></p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <p class="form-note"><span class="required">*</span> Campo obligatorio. Los enlaces deben comenzar con http:// o https://.</p>
+      <div class="form-actions">
+        <a class="button button-outline" href="{% if is_edit %}{{ url_for('companies.detail', company_id=company._id) }}{% else %}{{ url_for('companies.index') }}{% endif %}">Cancelar</a>
+        <button class="button" type="submit">{% if is_edit %}Guardar cambios{% else %}Crear empresa{% endif %} <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+  </section>
+  {% if not is_edit %}
+    <script src="{{ url_for('static', filename='js/company-scrape.js') }}" defer></script>
+  {% endif %}
+{% endblock %}

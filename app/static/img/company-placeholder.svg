@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title description">
+  <title id="title">Vista previa de empresa de software</title>
+  <desc id="description">Ilustración abstracta azul que representa una interfaz digital</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8f4ff"/>
+      <stop offset="1" stop-color="#c5e0f7"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f6fbff"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="560" fill="url(#background)"/>
+  <circle cx="780" cy="96" r="180" fill="#ffffff" opacity=".28"/>
+  <circle cx="105" cy="478" r="210" fill="#62aee7" opacity=".14"/>
+  <rect x="106" y="88" width="748" height="385" rx="20" fill="#426d95" opacity=".12"/>
+  <rect x="90" y="69" width="748" height="385" rx="20" fill="url(#panel)"/>
+  <rect x="90" y="69" width="748" height="46" rx="20" fill="#fff"/>
+  <path d="M90 95h748v20H90z" fill="#fff"/>
+  <circle cx="119" cy="92" r="5" fill="#71b4e6"/>
+  <circle cx="138" cy="92" r="5" fill="#a8d1ef"/>
+  <circle cx="157" cy="92" r="5" fill="#d0e7f8"/>
+  <rect x="127" y="154" width="300" height="18" rx="9" fill="#b9d8f0"/>
+  <rect x="127" y="187" width="438" height="43" rx="9" fill="#287fbc" opacity=".88"/>
+  <rect x="127" y="249" width="274" height="12" rx="6" fill="#cfdeea"/>
+  <rect x="127" y="270" width="235" height="12" rx="6" fill="#dbe6ef"/>
+  <rect x="127" y="317" width="121" height="38" rx="9" fill="#167bc1"/>
+  <rect x="500" y="151" width="290" height="238" rx="15" fill="#eaf4fb"/>
+  <rect x="525" y="178" width="240" height="142" rx="11" fill="#9dc9e9"/>
+  <path d="M550 293l51-52 36 31 48-59 56 80z" fill="#fff" opacity=".88"/>
+  <circle cx="713" cy="212" r="17" fill="#fff" opacity=".85"/>
+  <rect x="525" y="340" width="153" height="12" rx="6" fill="#bad5e8"/>
+  <rect x="525" y="361" width="201" height="10" rx="5" fill="#d1e2ee"/>
+</svg>

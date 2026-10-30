@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Directorio de empresas | MetaTech{% endblock %}
+{% block content %}
+  <section class="directory-hero">
+    <p class="eyebrow"><span class="eyebrow-dot"></span> DIRECTORIO TECNOLÓGICO · META, COLOMBIA</p>
+    <div class="hero-row">
+      <div>
+        <h1>Encuentra tu próxima<br><span class="text-accent">casa de software.</span></h1>
+        <p class="hero-copy">Explora empresas locales, conoce lo que hacen y conecta directamente con ellas.</p>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number">{{ companies|length }}</span>
+        <span class="stat-label">{% if search %}resultados{% else %}empresas{% endif %}<br>en el directorio</span>
+      </div>
+    </div>
+
+    <form class="search-form" method="get" action="{{ url_for('companies.index') }}" role="search">
+      <label class="sr-only" for="company-search">Buscar por nombre de empresa</label>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="company-search" type="search" name="q" value="{{ search }}" placeholder="Busca por nombre de empresa..." autocomplete="off">
+      {% if search %}
+        <a class="clear-search" href="{{ url_for('companies.index') }}">Limpiar</a>
+      {% endif %}
+      <button class="button search-button" type="submit">Buscar <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="search-hint">Puedes buscar el nombre completo o solo una parte.</p>
+  </section>
+
+  <section class="directory-section" aria-labelledby="results-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow eyebrow-muted">CONOCE EL ECOSISTEMA</p>
+        <h2 id="results-title">{% if search %}Resultados de búsqueda{% else %}Empresas destacadas{% endif %}</h2>
+      </div>
+      <span class="results-count">{{ companies|length }} encontradas</span>
+    </div>
+
+    {% if companies %}
+      <div class="company-grid">
+        {% for company in companies %}
+          <article class="company-card">
+            <div class="company-card-top">
+              <span class="company-monogram">{{ company.name[:1]|upper }}</span>
+              <span class="company-category">{{ company.category or "Desarrollo de software" }}</span>
+            </div>
+            <h3><a href="{{ url_for('companies.detail', company_id=company._id) }}">{{ company.name }}</a></h3>
+            <p class="company-address"><span aria-hidden="true">⌖</span> {{ company.address or "Dirección no registrada" }}</p>
+            <p class="company-summary">{{ company.products or "Consulta su ficha para conocer más sobre sus servicios." }}</p>
+            <div class="company-card-footer">
+              <a class="text-link" href="{{ url_for('companies.detail', company_id=company._id) }}">Ver ficha <span aria-hidden="true">→</span></a>
+              {% if company.website_url %}
+                <a class="external-link" href="{{ company.website_url }}" target="_blank" rel="noopener noreferrer">Sitio oficial ↗</a>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <span class="empty-icon" aria-hidden="true">⌕</span>
+        <h3>{% if search %}No encontramos coincidencias{% else %}Aún no hay empresas{% endif %}</h3>
+        <p>{% if search %}Prueba con otro nombre o con una parte más corta.{% else %}Agrega una empresa para empezar a construir el directorio.{% endif %}</p>
+        {% if search %}
+          <a class="button button-outline" href="{{ url_for('companies.index') }}">Ver todas las empresas</a>
+        {% else %}
+          <a class="button" href="{{ url_for('companies.new_company') }}">Agregar primera empresa</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

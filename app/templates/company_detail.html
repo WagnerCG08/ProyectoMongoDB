@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ company.name }} | MetaTech{% endblock %}
+{% block content %}
+  <div class="breadcrumb"><a href="{{ url_for('companies.index') }}">Directorio</a><span>/</span><span>{{ company.name }}</span></div>
+  <section class="detail-heading">
+    <div>
+      <p class="eyebrow">EMPRESA {{ company.name[:1]|upper }} · DESARROLLO DE SOFTWARE</p>
+      <h1>{{ company.name }}</h1>
+    </div>
+    <span class="category-pill">{{ company.category or "Desarrollo de software" }}</span>
+  </section>
+
+  <section class="detail-layout">
+    <div class="detail-info">
+      <article class="info-panel">
+        <span class="info-icon" aria-hidden="true">⌖</span>
+        <div>
+          <h2>Dirección sede principal</h2>
+          <p class="info-value">{{ company.address or "No registrada" }}</p>
+        </div>
+      </article>
+      <article class="info-panel info-panel-large">
+        <span class="info-icon" aria-hidden="true">▣</span>
+        <div>
+          <h2>Tipo de productos y software</h2>
+          <p>{{ company.products or "Información no registrada." }}</p>
+        </div>
+      </article>
+      <article class="info-panel">
+        <span class="info-icon" aria-hidden="true">☎</span>
+        <div>
+          <h2>Números de contacto</h2>
+          <p class="info-value">{{ company.contact or "No registrado" }}</p>
+          {% if company.website_url %}
+            <a class="website-text" href="{{ company.website_url }}" target="_blank" rel="noopener noreferrer">{{ company.website_url|replace("https://", "")|replace("http://", "")|trim("/") }} ↗</a>
+          {% endif %}
+        </div>
+      </article>
+      <div class="detail-actions">
+        <a class="button" href="{{ url_for('companies.edit_company', company_id=company._id) }}">Editar información</a>
+        <form method="post" action="{{ url_for('companies.delete_company', company_id=company._id) }}" onsubmit="return confirm('¿Seguro que quieres eliminar esta empresa? Esta acción no se puede deshacer.');">
+          <button class="button button-danger" type="submit">Eliminar</button>
+        </form>
+      </div>
+    </div>
+
+    <aside class="website-preview">
+      <div class="preview-topline">
+        <span class="preview-status"><span></span> PERFIL DE EMPRESA</span>
+        <span class="preview-number">01 / DIRECTORIO</span>
+      </div>
+      {% if company.website_url %}
+        <a class="preview-image-link" href="{{ company.website_url }}" target="_blank" rel="noopener noreferrer" aria-label="Visitar el sitio oficial de {{ company.name }}">
+          <img class="preview-image" src="{{ url_for('companies.company_image', company_id=company._id) }}" alt="Imagen o logo de {{ company.name }}">
+          <span class="preview-visit">Visitar sitio oficial ↗</span>
+        </a>
+      {% else %}
+        <div class="preview-image-link preview-image-disabled">
+          <img class="preview-image" src="{{ url_for('companies.company_image', company_id=company._id) }}" alt="Imagen o logo de {{ company.name }}">
+          <span class="preview-visit">Sitio oficial no registrado</span>
+        </div>
+      {% endif %}
+      <div class="preview-caption">
+        <span class="preview-monogram">{{ company.name[:1]|upper }}</span>
+        <div><strong>{{ company.name }}</strong><span>{{ company.category or "Casa desarrolladora de software" }}</span></div>
+      </div>
+    </aside>
+  </section>
+{% endblock %}
